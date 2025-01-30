@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { getClassStudents } from "../../redux/sclassRelated/sclassHandle";
-import { Paper, Box, Typography, ButtonGroup, Button, Popper, Grow, ClickAwayListener, MenuList, MenuItem } from '@mui/material';
-import { BlackButton, BlueButton} from "../../components/buttonStyles";
+import { Paper, Box, Typography, ButtonGroup, Button, Popper, Grow, ClickAwayListener, MenuList, MenuItem, Modal } from '@mui/material';
+import { BlackButton, BlueButton } from "../../components/buttonStyles";
 import TableTemplate from "../../components/TableTemplate";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import Webcam from "react-webcam";
 
 const TeacherClassDetails = () => {
     const navigate = useNavigate()
@@ -29,6 +30,17 @@ const TeacherClassDetails = () => {
         { id: 'name', label: 'Name', minWidth: 170 },
         { id: 'rollNum', label: 'Roll Number', minWidth: 100 },
     ]
+    const [openWebcam, setOpenWebcam] = useState(false);
+    const webcamRef = useRef(null);
+
+    const handleOpenWebcam = () => setOpenWebcam(true);
+    const handleCloseWebcam = () => setOpenWebcam(false);
+
+    const captureAttendance = () => {
+        const imageSrc = webcamRef.current.getScreenshot();
+        console.log("Captured Image:", imageSrc); // Send this to backend for processing
+        handleCloseWebcam();
+    };
 
     const studentRows = sclassStudents.map((student) => {
         return {
@@ -145,6 +157,7 @@ const TeacherClassDetails = () => {
 
     return (
         <>
+
             {loading ? (
                 <div>Loading...</div>
             ) : (
@@ -160,10 +173,26 @@ const TeacherClassDetails = () => {
                         </>
                     ) : (
                         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                            <Button variant="contained" color="primary" onClick={handleOpenWebcam}>
+                                Take Attendance
+                            </Button>
+                            <Modal open={openWebcam} onClose={handleCloseWebcam}>
+                                <Box sx={{ p: 4, backgroundColor: "white", borderRadius: 2 }}>
+                                    <Typography variant="h6">Capture Attendance</Typography>
+                                    <Webcam
+                                        ref={webcamRef}
+                                        screenshotFormat="image/jpeg"
+                                        width={400}
+                                        height={300}
+                                    />
+                                    <Button variant="contained" color="success" onClick={captureAttendance}>
+                                        Capture Image
+                                    </Button>
+                                </Box>
+                            </Modal>
                             <Typography variant="h5" gutterBottom>
                                 Students List:
                             </Typography>
-
                             {Array.isArray(sclassStudents) && sclassStudents.length > 0 &&
                                 <TableTemplate buttonHaver={StudentsButtonHaver} columns={studentColumns} rows={studentRows} />
                             }
