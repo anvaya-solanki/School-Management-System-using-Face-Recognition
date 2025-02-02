@@ -30,17 +30,17 @@ const TeacherClassDetails = () => {
         { id: 'name', label: 'Name', minWidth: 170 },
         { id: 'rollNum', label: 'Roll Number', minWidth: 100 },
     ]
-    const [openWebcam, setOpenWebcam] = useState(false);
-    const webcamRef = useRef(null);
+    // const [openWebcam, setOpenWebcam] = useState(false);
+    // const webcamRef = useRef(null);
 
-    const handleOpenWebcam = () => setOpenWebcam(true);
-    const handleCloseWebcam = () => setOpenWebcam(false);
+    // const handleOpenWebcam = () => setOpenWebcam(true);
+    // const handleCloseWebcam = () => setOpenWebcam(false);
 
-    const captureAttendance = () => {
-        const imageSrc = webcamRef.current.getScreenshot();
-        console.log("Captured Image:", imageSrc); // Send this to backend for processing
-        handleCloseWebcam();
-    };
+    // const captureAttendance = () => {
+    //     const imageSrc = webcamRef.current.getScreenshot();
+    //     console.log("Captured Image:", imageSrc); // Send this to backend for processing
+    //     handleCloseWebcam();
+    // };
 
     const studentRows = sclassStudents.map((student) => {
         return {
@@ -173,7 +173,7 @@ const TeacherClassDetails = () => {
                         </>
                     ) : (
                         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                            <Button variant="contained" color="primary" onClick={handleOpenWebcam}>
+                            {/* <Button variant="contained" color="primary" onClick={handleOpenWebcam}>
                                 Take Attendance
                             </Button>
                             <Modal open={openWebcam} onClose={handleCloseWebcam}>
@@ -189,7 +189,7 @@ const TeacherClassDetails = () => {
                                         Capture Image
                                     </Button>
                                 </Box>
-                            </Modal>
+                            </Modal> */}
                             <Typography variant="h5" gutterBottom>
                                 Students List:
                             </Typography>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
-import { BottomNavigation, BottomNavigationAction, Box, Button, Collapse, Paper, Table, TableBody, TableHead, Typography } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Box, Button, Collapse, Paper, Table, TableBody, TableHead, Typography, Modal } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
 import { calculateOverallAttendancePercentage, calculateSubjectAttendancePercentage, groupAttendanceBySubject } from '../../components/attendanceCalculator';
@@ -12,6 +12,7 @@ import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 import { StyledTableCell, StyledTableRow } from '../../components/styles';
+import Webcam from "react-webcam";
 
 const ViewStdAttendance = () => {
     const dispatch = useDispatch();
@@ -26,6 +27,17 @@ const ViewStdAttendance = () => {
     };
 
     const { userDetails, currentUser, loading, response, error } = useSelector((state) => state.user);
+    const [openWebcam, setOpenWebcam] = useState(false);
+    const webcamRef = useRef(null);
+
+    const handleOpenWebcam = () => setOpenWebcam(true);
+    const handleCloseWebcam = () => setOpenWebcam(false);
+
+    const captureAttendance = () => {
+        const imageSrc = webcamRef.current.getScreenshot();
+        console.log("Captured Image:", imageSrc); // Send this to backend for processing
+        handleCloseWebcam();
+    };
 
     useEffect(() => {
         dispatch(getUserDetails(currentUser._id, "Student"));
@@ -81,53 +93,72 @@ const ViewStdAttendance = () => {
                         const subjectAttendancePercentage = calculateSubjectAttendancePercentage(present, sessions);
 
                         return (
-                            <TableBody key={index}>
-                                <StyledTableRow>
-                                    <StyledTableCell>{subName}</StyledTableCell>
-                                    <StyledTableCell>{present}</StyledTableCell>
-                                    <StyledTableCell>{sessions}</StyledTableCell>
-                                    <StyledTableCell>{subjectAttendancePercentage}%</StyledTableCell>
-                                    <StyledTableCell align="center">
-                                        <Button variant="contained"
-                                            onClick={() => handleOpen(subId)}>
-                                            {openStates[subId] ? <KeyboardArrowUp /> : <KeyboardArrowDown />}Details
+                            <>
+                                <TableBody key={index}>
+                                    <StyledTableRow>
+                                        <StyledTableCell>{subName}</StyledTableCell>
+                                        <StyledTableCell>{present}</StyledTableCell>
+                                        <StyledTableCell>{sessions}</StyledTableCell>
+                                        <StyledTableCell>{subjectAttendancePercentage}%</StyledTableCell>
+                                        <StyledTableCell align="center">
+                                            <Button variant="contained"
+                                                onClick={() => handleOpen(subId)}>
+                                                {openStates[subId] ? <KeyboardArrowUp /> : <KeyboardArrowDown />}Details
+                                            </Button>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                    <StyledTableRow>
+                                        <StyledTableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                                            <Collapse in={openStates[subId]} timeout="auto" unmountOnExit>
+                                                <Box sx={{ margin: 1 }}>
+                                                    <Typography variant="h6" gutterBottom component="div">
+                                                        Attendance Details
+                                                    </Typography>
+                                                    <Table size="small" aria-label="purchases">
+                                                        <TableHead>
+                                                            <StyledTableRow>
+                                                                <StyledTableCell>Date</StyledTableCell>
+                                                                <StyledTableCell align="right">Status</StyledTableCell>
+                                                            </StyledTableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            {allData.map((data, index) => {
+                                                                const date = new Date(data.date);
+                                                                const dateString = date.toString() !== "Invalid Date" ? date.toISOString().substring(0, 10) : "Invalid Date";
+                                                                return (
+                                                                    <StyledTableRow key={index}>
+                                                                        <StyledTableCell component="th" scope="row">
+                                                                            {dateString}
+                                                                        </StyledTableCell>
+                                                                        <StyledTableCell align="right">{data.status}</StyledTableCell>
+                                                                    </StyledTableRow>
+                                                                )
+                                                            })}
+                                                        </TableBody>
+                                                    </Table>
+                                                </Box>
+                                            </Collapse>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                </TableBody>
+                                <Button variant="contained" color="primary" onClick={handleOpenWebcam}>
+                                    Take Attendance
+                                </Button>
+                                <Modal open={openWebcam} onClose={handleCloseWebcam}>
+                                    <Box sx={{ p: 4, backgroundColor: "white", borderRadius: 2 }}>
+                                        <Typography variant="h6">Capture Attendance</Typography>
+                                        <Webcam
+                                            ref={webcamRef}
+                                            screenshotFormat="image/jpeg"
+                                            width={400}
+                                            height={300}
+                                        />
+                                        <Button variant="contained" color="success" onClick={captureAttendance}>
+                                            Capture Image
                                         </Button>
-                                    </StyledTableCell>
-                                </StyledTableRow>
-                                <StyledTableRow>
-                                    <StyledTableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                                        <Collapse in={openStates[subId]} timeout="auto" unmountOnExit>
-                                            <Box sx={{ margin: 1 }}>
-                                                <Typography variant="h6" gutterBottom component="div">
-                                                    Attendance Details
-                                                </Typography>
-                                                <Table size="small" aria-label="purchases">
-                                                    <TableHead>
-                                                        <StyledTableRow>
-                                                            <StyledTableCell>Date</StyledTableCell>
-                                                            <StyledTableCell align="right">Status</StyledTableCell>
-                                                        </StyledTableRow>
-                                                    </TableHead>
-                                                    <TableBody>
-                                                        {allData.map((data, index) => {
-                                                            const date = new Date(data.date);
-                                                            const dateString = date.toString() !== "Invalid Date" ? date.toISOString().substring(0, 10) : "Invalid Date";
-                                                            return (
-                                                                <StyledTableRow key={index}>
-                                                                    <StyledTableCell component="th" scope="row">
-                                                                        {dateString}
-                                                                    </StyledTableCell>
-                                                                    <StyledTableCell align="right">{data.status}</StyledTableCell>
-                                                                </StyledTableRow>
-                                                            )
-                                                        })}
-                                                    </TableBody>
-                                                </Table>
-                                            </Box>
-                                        </Collapse>
-                                    </StyledTableCell>
-                                </StyledTableRow>
-                            </TableBody>
+                                    </Box>
+                                </Modal>
+                            </>
                         )
                     }
                     )}
