@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../../redux/userRelated/userHandle';
 import Popup from '../../../components/Popup';
 import { underControl } from '../../../redux/userRelated/userSlice';
 import { getAllSclasses } from '../../../redux/sclassRelated/sclassHandle';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Button, Modal, Box, Typography } from '@mui/material';
+import Webcam from "react-webcam";
 
 const AddStudent = ({ situation }) => {
     const dispatch = useDispatch()
@@ -21,6 +22,12 @@ const AddStudent = ({ situation }) => {
     const [password, setPassword] = useState('')
     const [className, setClassName] = useState('')
     const [sclassName, setSclassName] = useState('')
+    const [image, setImage] = useState(null);  // State to store captured image
+    const [openWebcam, setOpenWebcam] = useState(false);
+    const webcamRef = useRef(null);
+
+    const handleOpenWebcam = () => setOpenWebcam(true);
+    const handleCloseWebcam = () => setOpenWebcam(false);
 
     const adminID = currentUser._id
     const role = "Student"
@@ -52,8 +59,12 @@ const AddStudent = ({ situation }) => {
             setSclassName(selectedClass._id);
         }
     }
+    const captureImage = () => {
+        const imageSrc = webcamRef.current.getScreenshot();
+        setImage(imageSrc);
+    };
 
-    const fields = { name, rollNum, password, sclassName, adminID, role, attendance }
+    const fields = { name, rollNum, password, sclassName, adminID, role, attendance, image }
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -124,6 +135,51 @@ const AddStudent = ({ situation }) => {
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                         autoComplete="new-password" required />
+
+                    {/* Webcam component
+                    <label>Capture Image</label>
+                    <Webcam
+                        audio={false}
+                        ref={webcamRef}
+                        screenshotFormat="image/jpeg"
+                        width="100%"
+                        height="auto"
+                    />
+                    <button type="button" onClick={captureImage} className="captureButton">
+                        Capture Image
+                    </button>
+
+                    {/* Display captured image 
+                    {image && (
+                        <div>
+                            <label>Captured Image</label>
+                            <img src={image} alt="Captured" style={{ width: "100px", height: "100px", marginTop: "10px" }} />
+                        </div>
+                    )} */}
+
+                    <Button variant="contained" color="primary" onClick={handleOpenWebcam}>
+                        Take Picture
+                    </Button>
+                    <Modal open={openWebcam} onClose={handleCloseWebcam}>
+                        <Box sx={{ p: 4, backgroundColor: "white", borderRadius: 2 }}>
+                            <Typography variant="h6">Capture Image</Typography>
+                            <Webcam
+                                ref={webcamRef}
+                                screenshotFormat="image/jpeg"
+                                width={400}
+                                height={300}
+                            />
+                            <Button variant="contained" color="success" onClick={captureImage}>
+                                Capture Image
+                            </Button>
+                        </Box>
+                    </Modal>
+                    {image && (
+                        <div>
+                            <label>Captured Image</label>
+                            <img src={image} alt="Captured" style={{ width: "100px", height: "100px", marginTop: "10px" }} />
+                        </div>
+                    )}
 
                     <button className="registerButton" type="submit" disabled={loader}>
                         {loader ? (

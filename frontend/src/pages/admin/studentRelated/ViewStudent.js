@@ -51,6 +51,7 @@ const ViewStudent = () => {
     const [studentSchool, setStudentSchool] = useState('');
     const [subjectMarks, setSubjectMarks] = useState('');
     const [subjectAttendance, setSubjectAttendance] = useState([]);
+    const [imageUrl, setImageUrl] = useState(null);  // State to store the image URL
 
     const [openStates, setOpenStates] = useState({});
 
@@ -89,7 +90,7 @@ const ViewStudent = () => {
             setSubjectAttendance(userDetails.attendance || []);
         }
     }, [userDetails]);
-
+    console.log(imageUrl)
     const submitHandler = (event) => {
         event.preventDefault()
         dispatch(updateUser(fields, studentID, address))
@@ -102,13 +103,13 @@ const ViewStudent = () => {
     }
 
     const deleteHandler = () => {
-        setMessage("Sorry the delete function has been disabled for now.")
-        setShowPopup(true)
+        // setMessage("Sorry the delete function has been disabled for now.")
+        // setShowPopup(true)
 
-        // dispatch(deleteUser(studentID, address))
-        //     .then(() => {
-        //         navigate(-1)
-        //     })
+        dispatch(deleteUser(studentID, address))
+            .then(() => {
+                navigate(-1)
+            })
     }
 
     const removeHandler = (id, deladdress) => {
@@ -340,6 +341,11 @@ const ViewStudent = () => {
     }
 
     const StudentDetailsSection = () => {
+        useEffect(() => {
+            if (userDetails && userDetails.imageUrl) {
+                setImageUrl(userDetails.imageUrl);  // Assuming 'userDetails.imageUrl' contains the image URL
+            }
+        }, [userDetails]); // Re-run whenever userDetails changes
         return (
             <div>
                 Name: {userDetails.name}
@@ -349,11 +355,20 @@ const ViewStudent = () => {
                 Class: {sclassName.sclassName}
                 <br />
                 School: {studentSchool.schoolName}
+                <br />
+                Image:
+                {imageUrl && (
+                    <div>
+                        {/* Display image if imageUrl is available */}
+                        <img src={`data:image/jpeg;base64,${imageUrl}`} alt="Student" style={{ width: 100, height: 100 }} />
+                    </div>
+                )}
                 {
                     subjectAttendance && Array.isArray(subjectAttendance) && subjectAttendance.length > 0 && (
                         <CustomPieChart data={chartData} />
                     )
                 }
+                <br />
                 <Button variant="contained" sx={styles.styledButton} onClick={deleteHandler}>
                     Delete
                 </Button>

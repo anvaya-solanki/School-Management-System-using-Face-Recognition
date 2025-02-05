@@ -54,7 +54,11 @@ const studentSchema = new mongoose.Schema({
             ref: 'subject',
             required: true
         }
-    }]
+    }],
+    image: { 
+        type: String,
+        required: true
+    },
 });
 
 module.exports = mongoose.model("student", studentSchema);
