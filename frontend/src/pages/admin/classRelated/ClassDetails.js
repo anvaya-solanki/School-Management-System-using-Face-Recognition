@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
 import { getClassDetails, getClassStudents, getSubjectList } from "../../../redux/sclassRelated/sclassHandle";
+import { getClassTeachers } from "../../../redux/teacherRelated/teacherHandle";
 import { deleteUser } from '../../../redux/userRelated/userHandle';
 import {
     Box, Container, Typography, Tab, IconButton
@@ -23,14 +24,16 @@ const ClassDetails = () => {
     const params = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { subjectsList, sclassStudents, sclassDetails, loading, error, response, getresponse } = useSelector((state) => state.sclass);
-
+    const { subjectsList, sclassStudents, sclassDetails,sclassTeachers, loading, error, response, getresponse } = useSelector((state) => state.sclass);
+    const teachers = useSelector(state => state.sclass.teachers);
+    console.log("Redux Teachers State:", teachers); 
     const classID = params.id
 
     useEffect(() => {
         dispatch(getClassDetails(classID, "Sclass"));
         dispatch(getSubjectList(classID, "ClassSubjects"))
         dispatch(getClassStudents(classID));
+        dispatch(getClassTeachers(classID));
     }, [dispatch, classID])
 
     if (error) {
@@ -49,14 +52,14 @@ const ClassDetails = () => {
     const deleteHandler = (deleteID, address) => {
         console.log(deleteID);
         console.log(address);
-        setMessage("Sorry the delete function has been disabled for now.")
-        setShowPopup(true)
-        // dispatch(deleteUser(deleteID, address))
-        //     .then(() => {
-        //         dispatch(getClassStudents(classID));
-        //         dispatch(resetSubjects())
-        //         dispatch(getSubjectList(classID, "ClassSubjects"))
-        //     })
+        //setMessage("Sorry the delete function has been disabled for now.")
+        //setShowPopup(true)
+        dispatch(deleteUser(deleteID, address))
+             .then(() => {
+                 dispatch(getClassStudents(classID));
+                 dispatch(resetSubjects())
+                 dispatch(getSubjectList(classID, "ClassSubjects"))
+             })
     }
 
     const subjectColumns = [
@@ -203,18 +206,86 @@ const ClassDetails = () => {
         )
     }
 
+    const teacherColumns = [
+        { id: 'name', label: 'Name', minWidth: 170 },
+        { id: 'subject', label: 'Subject', minWidth: 100 },
+    ]
+
+    const teacherRows = sclassTeachers.map((teacher) => {
+        return {
+            name: teacher.name,
+            subject: teacher.subject,
+        };
+    })
+
+    const TeachersButtonHaver = ({ row }) => {
+        return (
+            <>
+                <IconButton onClick={() => deleteHandler(row.id, "Teacher")}>
+                    <PersonRemoveIcon color="error" />
+                </IconButton>
+                <BlueButton
+                    variant="contained"
+                    onClick={() => navigate("/Admin/teachers/teacher/" + row.id)}
+                >
+                    View
+                </BlueButton>
+                <PurpleButton
+                    variant="contained"
+                    onClick={() =>
+                        navigate("/Admin/teachers/teacher/details/" + row.id)
+                    }
+                >
+                    Attendance
+                </PurpleButton>
+            </>
+        );
+    };
+
+    const teacherActions = [
+        {
+            icon: <PersonAddAlt1Icon color="primary" />, name: 'Add New Teacher',
+            action: () => navigate("/Admin/class/addteachers/" + classID)
+        },
+        {
+            icon: <PersonRemoveIcon color="error" />, name: 'Delete All Teachers',
+            action: () => deleteHandler(classID, "TeachersClass")
+        },
+    ];
+
     const ClassTeachersSection = () => {
         return (
             <>
-                Teachers
+                {getresponse ? (
+                    <>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+                            <GreenButton
+                                variant="contained"
+                                onClick={() => navigate("/Admin/class/addteachers/" + classID)}
+                            >
+                                Add Teachers
+                            </GreenButton>
+                        </Box>
+                    </>
+                ) : (
+                    <>
+                        <Typography variant="h5" gutterBottom>
+                            Teachers List:
+                        </Typography>
+
+                        <TableTemplate buttonHaver={TeachersButtonHaver} columns={teacherColumns} rows={teacherRows} />
+                        <SpeedDialTemplate actions={teacherActions} />
+                    </>
+                )}
             </>
         )
     }
 
+
     const ClassDetailsSection = () => {
         const numberOfSubjects = subjectsList.length;
         const numberOfStudents = sclassStudents.length;
-
+        const numberOfTeachers = sclassTeachers.length;
         return (
             <>
                 <Typography variant="h4" align="center" gutterBottom>
@@ -228,6 +299,9 @@ const ClassDetails = () => {
                 </Typography>
                 <Typography variant="h6" gutterBottom>
                     Number of Students: {numberOfStudents}
+                </Typography>
+                <Typography variant="h6" gutterBottom>
+                    Number of Teachers: {numberOfTeachers}
                 </Typography>
                 {getresponse &&
                     <GreenButton
@@ -243,6 +317,14 @@ const ClassDetails = () => {
                         onClick={() => navigate("/Admin/addsubject/" + classID)}
                     >
                         Add Subjects
+                    </GreenButton>
+                }
+                {response &&
+                    <GreenButton
+                        variant="contained"
+                        onClick={() => navigate("/Admin/addteacher/" + classID)}
+                    >
+                        Add Teachers
                     </GreenButton>
                 }
             </>
@@ -285,6 +367,20 @@ const ClassDetails = () => {
             )}
             <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
         </>
+    );
+    return (
+        <div>
+            <h2>Teacher List</h2>
+            {teachers.length > 0 ? (
+                <ul>
+                    {teachers.map((teacher) => (
+                        <li key={teacher.id}>{teacher.name}</li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No teachers found.</p>
+            )}
+        </div>
     );
 };
 
