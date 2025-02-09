@@ -70,6 +70,22 @@ const getSclassStudents = async (req, res) => {
         res.status(500).json(err);
     }
 }
+const getSclassTeachers = async (req, res) => {
+    try {
+        let teachers = await Teacher.find({ sclassName: req.params.id });
+        if (teachers.length > 0) {
+            let modifiedTeachers = teachers.map((teacher) => {
+                return { ...teacher._doc, password: undefined };
+            });
+            res.send(modifiedTeachers);
+        } else {
+            res.send({ message: "No teachers found" });
+        }
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
+
 
 const deleteSclass = async (req, res) => {
     try {
@@ -102,4 +118,4 @@ const deleteSclasses = async (req, res) => {
 }
 
 
-module.exports = { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail, getSclassStudents };
+module.exports = { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail, getSclassStudents, getSclassTeachers };

@@ -42,6 +42,20 @@ export const getClassStudents = (id) => async (dispatch) => {
         dispatch(getError(error));
     }
 }
+export const getClassTeachers = (id) => async (dispatch) => {
+    dispatch(getRequest());
+
+    try {
+        const result = await axios.get(`${REACT_APP_BASE_URL}/Sclass/Teachers/${id}`);
+        if (result.data.message) {
+            dispatch(getFailedTwo(result.data.message));
+        } else {
+            dispatch(getStudentsSuccess(result.data));
+        }
+    } catch (error) {
+        dispatch(getError(error));
+    }
+}
 
 export const getClassDetails = (id, address) => async (dispatch) => {
     dispatch(getRequest());
