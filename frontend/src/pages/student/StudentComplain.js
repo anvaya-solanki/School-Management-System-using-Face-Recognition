@@ -1,7 +1,7 @@
 // import { useEffect, useState } from 'react';
 // import { Box, CircularProgress, Stack, TextField, Typography } from '@mui/material';
 // import Popup from '../../components/Popup';
-// import { BlueButton } from '../../components/buttonStyles';
+// import { LightGreenButton } from '../../components/buttonStyles';
 // import { addStuff } from '../../redux/userRelated/userHandle';
 // import { useDispatch, useSelector } from 'react-redux';
 
@@ -94,7 +94,7 @@
 //                                     maxRows={4}
 //                                 />
 //                             </Stack>
-//                             <BlueButton
+//                             <LightGreenButton
 //                                 fullWidth
 //                                 size="large"
 //                                 sx={{ mt: 3 }}
@@ -103,7 +103,7 @@
 //                                 disabled={loader}
 //                             >
 //                                 {loader ? <CircularProgress size={24} color="inherit" /> : "Add"}
-//                             </BlueButton>
+//                             </LightGreenButton>
 //                         </form>
 //                     </div>
 //                 </Box>

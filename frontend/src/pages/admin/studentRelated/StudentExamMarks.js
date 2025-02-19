@@ -6,7 +6,7 @@ import { getSubjectList } from '../../../redux/sclassRelated/sclassHandle';
 import { updateStudentFields } from '../../../redux/studentRelated/studentHandle';
 
 import Popup from '../../../components/Popup';
-import { BlueButton } from '../../../components/buttonStyles';
+import { LightGreenButton } from '../../../components/buttonStyles';
 import {
     Box, InputLabel,
     MenuItem, Select,
@@ -158,7 +158,7 @@ const StudentExamMarks = ({ situation }) => {
                                         />
                                     </FormControl>
                                 </Stack>
-                                <BlueButton
+                                <LightGreenButton
                                     fullWidth
                                     size="large"
                                     sx={{ mt: 3 }}
@@ -167,7 +167,7 @@ const StudentExamMarks = ({ situation }) => {
                                     disabled={loader}
                                 >
                                     {loader ? <CircularProgress size={24} color="inherit" /> : "Submit"}
-                                </BlueButton>
+                                </LightGreenButton>
                             </form>
                         </Box>
                     </Box>

@@ -8,6 +8,7 @@ const { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail,
 const { complainCreate, complainList } = require('../controllers/complain-controller.js');
 const { noticeCreate, noticeList, deleteNotices, deleteNotice, updateNotice } = require('../controllers/notice-controller.js');
 const {
+    upload,
     studentRegister,
     studentLogIn,
     getStudents,
@@ -36,7 +37,7 @@ router.get("/Admin/:id", getAdminDetail)
 
 // Student
 
-router.post('/StudentReg', studentRegister);
+router.post('/StudentReg', upload, studentRegister);
 router.post('/StudentLogin', studentLogIn)
 
 router.get("/Students/:id", getStudents)

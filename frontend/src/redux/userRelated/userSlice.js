@@ -43,7 +43,7 @@ const userSlice = createSlice({
         },
         authError: (state, action) => {
             state.status = 'error';
-            state.error = action.payload;
+            state.error = action.payload.message;
         },
         authLogout: (state) => {
             localStorage.removeItem('user');

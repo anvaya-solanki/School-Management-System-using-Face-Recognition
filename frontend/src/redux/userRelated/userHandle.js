@@ -36,9 +36,10 @@ export const registerUser = (fields, role) => async (dispatch) => {
 
     try {
         const result = await axios.post(`${REACT_APP_BASE_URL}/${role}Reg`, fields, {
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'multipart/form-data' },
         });
         if (result.data.schoolName) {
+            console.log("School name")
             dispatch(authSuccess(result.data));
         }
         else if (result.data.school) {
@@ -48,7 +49,8 @@ export const registerUser = (fields, role) => async (dispatch) => {
             dispatch(authFailed(result.data.message));
         }
     } catch (error) {
-        dispatch(authError(error));
+        const errorMessage = error?.response?.data?.message || error.message;  // Extract error message
+        dispatch(authError({ message: errorMessage }));  // Only send the message
     }
 };
 
@@ -95,7 +97,9 @@ export const updateUser = (fields, id, address) => async (dispatch) => {
 
     try {
         const result = await axios.put(`${REACT_APP_BASE_URL}/${address}/${id}`, fields, {
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                // 'Content-Type': 'application/json' 
+            },
         });
         if (result.data.schoolName) {
             dispatch(authSuccess(result.data));
@@ -108,12 +112,33 @@ export const updateUser = (fields, id, address) => async (dispatch) => {
     }
 }
 
+// export const addStuff = (fields, address) => async (dispatch) => {
+//     dispatch(authRequest());
+
+//     try {
+//         const result = await axios.post(`${REACT_APP_BASE_URL}/${address}Create`, fields, {
+//             headers: { 'Content-Type': 'application/json' },
+//         });
+
+//         if (result.data.message) {
+//             dispatch(authFailed(result.data.message));
+//         } else {
+//             dispatch(stuffAdded(result.data));
+//         }
+//     } catch (error) {
+//         dispatch(authError(error));
+//     }
+// };
+
 export const addStuff = (fields, address) => async (dispatch) => {
     dispatch(authRequest());
 
     try {
         const result = await axios.post(`${REACT_APP_BASE_URL}/${address}Create`, fields, {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                // Remove Content-Type for FormData
+                // 'Content-Type': 'application/json', 
+            },
         });
 
         if (result.data.message) {

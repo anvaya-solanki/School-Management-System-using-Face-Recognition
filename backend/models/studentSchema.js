@@ -53,11 +53,15 @@ const studentSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'subject',
             required: true
-        }
+        },
     }],
     image: { 
         type: String,
         required: true
+    },
+    embeddings: { 
+        type: [Number], 
+        required: true 
     },
 });
 

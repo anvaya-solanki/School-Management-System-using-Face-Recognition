@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser } from '../../../redux/userRelated/userHandle';
 import { getAllSclasses } from '../../../redux/sclassRelated/sclassHandle';
-import { BlueButton, GreenButton } from '../../../components/buttonStyles';
+import { LightGreenButton, GreenButton } from '../../../components/buttonStyles';
 import TableTemplate from '../../../components/TableTemplate';
 
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -68,10 +68,10 @@ const ShowClasses = () => {
         <IconButton onClick={() => deleteHandler(row.id, "Sclass")} color="secondary">
           <DeleteIcon color="error" />
         </IconButton>
-        <BlueButton variant="contained"
+        <LightGreenButton variant="contained"
           onClick={() => navigate("/Admin/classes/class/" + row.id)}>
           View
-        </BlueButton>
+        </LightGreenButton>
         <ActionMenu actions={actions} />
       </ButtonContainer>
     );

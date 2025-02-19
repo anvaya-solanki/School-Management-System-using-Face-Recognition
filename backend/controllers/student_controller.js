@@ -1,35 +1,126 @@
 const bcrypt = require('bcrypt');
 const Student = require('../models/studentSchema.js');
 const Subject = require('../models/subjectSchema.js');
+const { spawn } = require('child_process');
+const fs = require('fs');
+const multer = require('multer');
+const path = require('path');
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Make sure this folder exists
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage }).single('image');
+
+// const studentRegister = async (req, res) => {
+//     try {
+//         const salt = await bcrypt.genSalt(10);
+//         const hashedPass = await bcrypt.hash(req.body.password, salt);
+
+//         const existingStudent = await Student.findOne({
+//             rollNum: req.body.rollNum,
+//             school: req.body.adminID,
+//             sclassName: req.body.sclassName,
+//         });
+
+//         if (existingStudent) {
+//             res.send({ message: 'Roll Number already exists' });
+//         }
+//         else {
+//             const student = new Student({
+//                 ...req.body,
+//                 school: req.body.adminID,
+//                 password: hashedPass
+//             });
+
+//             let result = await student.save();
+
+//             result.password = undefined;
+//             res.send(result);
+//         }
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
+// };
 
 const studentRegister = async (req, res) => {
     try {
+        // Hash Password
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(req.body.password, salt);
 
+        // Check if student already exists
         const existingStudent = await Student.findOne({
             rollNum: req.body.rollNum,
             school: req.body.adminID,
             sclassName: req.body.sclassName,
         });
-
+        console.log("In StudentReg")
         if (existingStudent) {
-            res.send({ message: 'Roll Number already exists' });
+            return res.status(400).json({ message: 'Roll Number already exists' });
         }
-        else {
-            const student = new Student({
-                ...req.body,
-                school: req.body.adminID,
-                password: hashedPass
-            });
-
-            let result = await student.save();
-
-            result.password = undefined;
-            res.send(result);
+        console.log("req.file:", req.file);
+        // Ensure Image is Uploaded
+        if (!req.file) {
+            return res.status(400).json({ message: 'Image is required' });
         }
+
+        const imagePath = req.file.path;
+        console.log("Got image path")
+
+        if (req.body.attendance && typeof req.body.attendance === 'string') {
+            try {
+                req.body.attendance = JSON.parse(req.body.attendance);
+            } catch (err) {
+                req.body.attendance = [];
+            }
+        }
+
+        // Run Python Script to Extract Face Embeddings
+        const pythonProcess = spawn('python', ['process_faces.py', imagePath]);
+        console.log("Entering try catch")
+        pythonProcess.stdout.on('data', async (data) => {
+            try {
+                console.log("Starting Python process for image:", imagePath);
+                const embeddings = JSON.parse(data.toString().trim());
+
+                if (embeddings.length === 0) {
+                    return res.status(400).json({ message: 'No face detected in image' });
+                }
+
+                // Create Student Object
+                const student = new Student({
+                    ...req.body,
+                    school: req.body.adminID,
+                    password: hashedPass,
+                    image: imagePath, // Store Image Path
+                    embeddings: embeddings // Store Face Embeddings
+                });
+
+                let result = await student.save();
+                result.password = undefined;
+                res.json(result);
+                console.log("Process complete")
+            } catch (error) {
+                console.error('Error saving embeddings:', error);
+                res.status(500).json({ message: 'Error processing face embeddings' });
+            }
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`Python Error: ${data}`);
+            res.status(500).json({ message: `Python Error: ${data}` });
+        });
+
     } catch (err) {
-        res.status(500).json(err);
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
@@ -273,6 +364,7 @@ const removeStudentAttendance = async (req, res) => {
 
 
 module.exports = {
+    upload,
     studentRegister,
     studentLogIn,
     getStudents,

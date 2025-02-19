@@ -4,7 +4,7 @@ import { Box, Table, TableBody, TableContainer, TableHead, Typography, Paper } f
 import { useNavigate, useParams } from 'react-router-dom';
 import { getTeacherFreeClassSubjects } from '../../../redux/sclassRelated/sclassHandle';
 import { updateTeachSubject } from '../../../redux/teacherRelated/teacherHandle';
-import { GreenButton, PurpleButton } from '../../../components/buttonStyles';
+import { GreenButton, DarkRedButton } from '../../../components/buttonStyles';
 import { StyledTableCell, StyledTableRow } from '../../../components/styles';
 
 const ChooseSubject = ({ situation }) => {
@@ -38,10 +38,10 @@ const ChooseSubject = ({ situation }) => {
         return <div>
             <h1>Sorry all subjects have teachers assigned already</h1>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-                <PurpleButton variant="contained"
+                <DarkRedButton variant="contained"
                     onClick={() => navigate("/Admin/addsubject/" + classID)}>
                     Add Subjects
-                </PurpleButton>
+                </DarkRedButton>
             </Box>
         </div>;
     } else if (error) {

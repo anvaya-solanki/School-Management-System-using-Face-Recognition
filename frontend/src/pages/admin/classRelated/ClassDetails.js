@@ -10,7 +10,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { resetSubjects } from "../../../redux/sclassRelated/sclassSlice";
-import { BlueButton, GreenButton, PurpleButton } from "../../../components/buttonStyles";
+import { LightGreenButton, GreenButton, DarkRedButton } from "../../../components/buttonStyles";
 import TableTemplate from "../../../components/TableTemplate";
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
@@ -78,14 +78,14 @@ const ClassDetails = () => {
                 <IconButton onClick={() => deleteHandler(row.id, "Subject")}>
                     <DeleteIcon color="error" />
                 </IconButton>
-                <BlueButton
+                <LightGreenButton
                     variant="contained"
                     onClick={() => {
                         navigate(`/Admin/class/subject/${classID}/${row.id}`)
                     }}
                 >
                     View
-                </BlueButton >
+                </LightGreenButton >
             </>
         );
     };
@@ -146,20 +146,20 @@ const ClassDetails = () => {
                 <IconButton onClick={() => deleteHandler(row.id, "Student")}>
                     <PersonRemoveIcon color="error" />
                 </IconButton>
-                <BlueButton
+                <LightGreenButton
                     variant="contained"
                     onClick={() => navigate("/Admin/students/student/" + row.id)}
                 >
                     View
-                </BlueButton>
-                <PurpleButton
+                </LightGreenButton>
+                <DarkRedButton
                     variant="contained"
                     onClick={() =>
                         navigate("/Admin/students/student/attendance/" + row.id)
                     }
                 >
                     Attendance
-                </PurpleButton>
+                </DarkRedButton>
             </>
         );
     };

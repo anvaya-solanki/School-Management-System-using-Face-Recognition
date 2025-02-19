@@ -3,6 +3,8 @@ import SeeNotice from '../../components/SeeNotice';
 import Students from "../../assets/img1.png";
 import Classes from "../../assets/img2.png";
 import Teachers from "../../assets/img3.png";
+import newStudents from "../../assets/img6.jpg"
+import newTeachers from "../../assets/img7.jpg"
 import Fees from "../../assets/img4.png";
 import styled from 'styled-components';
 import CountUp from 'react-countup';
@@ -38,7 +40,7 @@ const AdminHomePage = () => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={3} lg={3}>
                         <StyledPaper>
-                            <img src={Students} alt="Students" />
+                            <img src={newStudents} alt="Students"/>
                             <Title>
                                 Total Students
                             </Title>
@@ -56,7 +58,7 @@ const AdminHomePage = () => {
                     </Grid>
                     <Grid item xs={12} md={3} lg={3}>
                         <StyledPaper>
-                            <img src={Teachers} alt="Teachers" />
+                            <img src={newTeachers} alt="Teachers" />
                             <Title>
                                 Total Teachers
                             </Title>

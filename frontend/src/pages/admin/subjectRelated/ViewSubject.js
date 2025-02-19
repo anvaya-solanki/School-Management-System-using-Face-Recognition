@@ -3,7 +3,7 @@ import { getClassStudents, getSubjectDetails } from '../../../redux/sclassRelate
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Tab, Container, Typography, BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
-import { BlueButton, GreenButton, PurpleButton } from '../../../components/buttonStyles';
+import { LightGreenButton, GreenButton, DarkRedButton } from '../../../components/buttonStyles';
 import TableTemplate from '../../../components/TableTemplate';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -58,20 +58,20 @@ const ViewSubject = () => {
   const StudentsAttendanceButtonHaver = ({ row }) => {
     return (
       <>
-        <BlueButton
+        <LightGreenButton
           variant="contained"
           onClick={() => navigate("/Admin/students/student/" + row.id)}
         >
           View
-        </BlueButton>
-        <PurpleButton
+        </LightGreenButton>
+        <DarkRedButton
           variant="contained"
           onClick={() =>
             navigate(`/Admin/subject/student/attendance/${row.id}/${subjectID}`)
           }
         >
           Take Attendance
-        </PurpleButton>
+        </DarkRedButton>
       </>
     );
   };
@@ -79,16 +79,16 @@ const ViewSubject = () => {
   const StudentsMarksButtonHaver = ({ row }) => {
     return (
       <>
-        <BlueButton
+        <LightGreenButton
           variant="contained"
           onClick={() => navigate("/Admin/students/student/" + row.id)}
         >
           View
-        </BlueButton>
-        <PurpleButton variant="contained"
+        </LightGreenButton>
+        <DarkRedButton variant="contained"
           onClick={() => navigate(`/Admin/subject/student/marks/${row.id}/${subjectID}`)}>
           Provide Marks
-        </PurpleButton>
+        </DarkRedButton>
       </>
     );
   };

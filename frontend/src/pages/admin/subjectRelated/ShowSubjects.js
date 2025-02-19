@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableTemplate from '../../../components/TableTemplate';
-import { BlueButton, GreenButton } from '../../../components/buttonStyles';
+import { LightGreenButton, GreenButton } from '../../../components/buttonStyles';
 import SpeedDialTemplate from '../../../components/SpeedDialTemplate';
 import Popup from '../../../components/Popup';
 
@@ -64,10 +64,10 @@ const ShowSubjects = () => {
                 <IconButton onClick={() => deleteHandler(row.id, "Subject")}>
                     <DeleteIcon color="error" />
                 </IconButton>
-                <BlueButton variant="contained"
+                <LightGreenButton variant="contained"
                     onClick={() => navigate(`/Admin/subjects/subject/${row.sclassID}/${row.id}`)}>
                     View
-                </BlueButton>
+                </LightGreenButton>
             </>
         );
     };

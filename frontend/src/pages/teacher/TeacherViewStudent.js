@@ -6,7 +6,7 @@ import { Box, Button, Collapse, Table, TableBody, TableHead, Typography } from '
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { calculateOverallAttendancePercentage, calculateSubjectAttendancePercentage, groupAttendanceBySubject } from '../../components/attendanceCalculator';
 import CustomPieChart from '../../components/CustomPieChart'
-import { PurpleButton } from '../../components/buttonStyles';
+import { DarkRedButton } from '../../components/buttonStyles';
 import { StyledTableCell, StyledTableRow } from '../../components/styles';
 
 const TeacherViewStudent = () => {
@@ -199,13 +199,13 @@ const TeacherViewStudent = () => {
                             })}
                         </>
                     }
-                    <PurpleButton variant="contained"
+                    <DarkRedButton variant="contained"
                         onClick={() =>
                             navigate(
                                 `/Teacher/class/student/marks/${studentID}/${teachSubjectID}`
                             )}>
                         Add Marks
-                    </PurpleButton>
+                    </DarkRedButton>
                     <br /><br /><br />
                 </div>
             }

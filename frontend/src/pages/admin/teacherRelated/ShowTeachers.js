@@ -9,7 +9,7 @@ import {
 import { deleteUser } from '../../../redux/userRelated/userHandle';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { StyledTableCell, StyledTableRow } from '../../../components/styles';
-import { BlueButton, GreenButton } from '../../../components/buttonStyles';
+import { LightGreenButton, GreenButton } from '../../../components/buttonStyles';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import SpeedDialTemplate from '../../../components/SpeedDialTemplate';
 import Popup from '../../../components/Popup';
@@ -136,10 +136,10 @@ const ShowTeachers = () => {
                                             <IconButton onClick={() => deleteHandler(row.id, "Teacher")}>
                                                 <PersonRemoveIcon color="error" />
                                             </IconButton>
-                                            <BlueButton variant="contained"
+                                            <LightGreenButton variant="contained"
                                                 onClick={() => navigate("/Admin/teachers/teacher/" + row.id)}>
                                                 View
-                                            </BlueButton>
+                                            </LightGreenButton>
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 );

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addStuff } from '../../../redux/userRelated/userHandle';
 import { underControl } from '../../../redux/userRelated/userSlice';
-import { BlueButton } from "../../../components/buttonStyles";
+import { LightGreenButton } from "../../../components/buttonStyles";
 import Popup from "../../../components/Popup";
 import Classroom from "../../../assets/classroom.png";
 import styled from "styled-components";
@@ -78,7 +78,7 @@ const AddClass = () => {
                                 }}
                                 required
                             />
-                            <BlueButton
+                            <LightGreenButton
                                 fullWidth
                                 size="large"
                                 sx={{ mt: 3 }}
@@ -87,7 +87,7 @@ const AddClass = () => {
                                 disabled={loader}
                             >
                                 {loader ? <CircularProgress size={24} color="inherit" /> : "Create"}
-                            </BlueButton>
+                            </LightGreenButton>
                             <Button variant="outlined" onClick={() => navigate(-1)}>
                                 Go Back
                             </Button>

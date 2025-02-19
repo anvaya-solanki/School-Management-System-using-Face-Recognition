@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { getClassStudents } from "../../redux/sclassRelated/sclassHandle";
 import { Paper, Box, Typography, ButtonGroup, Button, Popper, Grow, ClickAwayListener, MenuList, MenuItem, Modal } from '@mui/material';
-import { BlackButton, BlueButton } from "../../components/buttonStyles";
+import { BlackButton, LightGreenButton } from "../../components/buttonStyles";
 import TableTemplate from "../../components/TableTemplate";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import Webcam from "react-webcam";
@@ -91,14 +91,14 @@ const TeacherClassDetails = () => {
         };
         return (
             <>
-                <BlueButton
+                <LightGreenButton
                     variant="contained"
                     onClick={() =>
                         navigate("/Teacher/class/student/" + row.id)
                     }
                 >
                     View
-                </BlueButton>
+                </LightGreenButton>
                 <React.Fragment>
                     <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
                         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
