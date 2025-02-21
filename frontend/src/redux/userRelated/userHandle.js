@@ -31,12 +31,35 @@ export const loginUser = (fields, role) => async (dispatch) => {
     }
 };
 
+export const registerStudent = (fields, role) => async (dispatch) => {
+    dispatch(authRequest());
+    console.log("Request sent")
+    try {
+        const result = await axios.post(`${REACT_APP_BASE_URL}/StudentReg`, fields, {
+            headers: { 'Content-Type': 'application.json' },
+        });
+        if (result.data.schoolName) {
+            console.log("School name")
+            dispatch(authSuccess(result.data));
+        }
+        else if (result.data.school) {
+            dispatch(stuffAdded());
+        }
+        else {
+            dispatch(authFailed(result.data.message));
+        }
+    } catch (error) {
+        const errorMessage = error?.response?.data?.message || error.message;  // Extract error message
+        dispatch(authError({ message: errorMessage }));  // Only send the message
+    }
+};
+
 export const registerUser = (fields, role) => async (dispatch) => {
     dispatch(authRequest());
-
+    console.log("Request sent")
     try {
         const result = await axios.post(`${REACT_APP_BASE_URL}/${role}Reg`, fields, {
-            headers: { 'Content-Type': 'multipart/form-data' },
+            headers: { 'Content-Type': 'application/json' },
         });
         if (result.data.schoolName) {
             console.log("School name")

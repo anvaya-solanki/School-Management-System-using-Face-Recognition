@@ -2,26 +2,80 @@ const bcrypt = require('bcrypt');
 const Teacher = require('../models/teacherSchema.js');
 const Subject = require('../models/subjectSchema.js');
 
+// const teacherRegister = async (req, res) => {
+//     const { name, email, password, role, school, teachSubject, teachSclass } = req.body;
+//     try {
+//         const salt = await bcrypt.genSalt(10);
+//         const hashedPass = await bcrypt.hash(password, salt);
+
+//         const teacher = new Teacher({ name, email, password: hashedPass, role, school, teachSubject, teachSclass });
+//         console.log("Received teacher details")
+//         const existingTeacherByEmail = await Teacher.findOne({ email });
+
+//         if (existingTeacherByEmail) {
+//             res.send({ message: 'Email already exists' });
+//         }
+//         else {
+//             let result = await teacher.save();
+//             await Subject.findByIdAndUpdate(teachSubject, { teacher: teacher._id });
+//             result.password = undefined;
+//             res.send(result);
+//         }
+//     } catch (err) {
+//         console.log(err.message)
+//         res.status(500).json(err);
+//     }
+// };
+
 const teacherRegister = async (req, res) => {
     const { name, email, password, role, school, teachSubject, teachSclass } = req.body;
+    console.log('Received request body:', req.body);
     try {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPass = await bcrypt.hash(password, salt);
+        // Add validation for password
+        if (!password) {
+            return res.status(400).json({ message: 'Password is required' });
+        }
 
-        const teacher = new Teacher({ name, email, password: hashedPass, role, school, teachSubject, teachSclass });
+        // Add error handling for salt generation
+        let salt;
+        try {
+            salt = await bcrypt.genSalt(10);
+        } catch (error) {
+            return res.status(500).json({ message: 'Error generating salt' });
+        }
 
+        // Add error handling for password hashing
+        let hashedPass;
+        try {
+            hashedPass = await bcrypt.hash(password, salt);
+        } catch (error) {
+            return res.status(500).json({ message: 'Error hashing password' });
+        }
+
+        const teacher = new Teacher({ 
+            name, 
+            email, 
+            password: hashedPass, 
+            role, 
+            school, 
+            teachSubject, 
+            teachSclass 
+        });
+
+        console.log("Received teacher details");
+        
         const existingTeacherByEmail = await Teacher.findOne({ email });
-
         if (existingTeacherByEmail) {
-            res.send({ message: 'Email already exists' });
+            return res.status(400).json({ message: 'Email already exists' });
         }
-        else {
-            let result = await teacher.save();
-            await Subject.findByIdAndUpdate(teachSubject, { teacher: teacher._id });
-            result.password = undefined;
-            res.send(result);
-        }
+
+        let result = await teacher.save();
+        await Subject.findByIdAndUpdate(teachSubject, { teacher: teacher._id });
+        result.password = undefined;
+        res.send(result);
+
     } catch (err) {
+        console.log(err.message)
         res.status(500).json(err);
     }
 };
