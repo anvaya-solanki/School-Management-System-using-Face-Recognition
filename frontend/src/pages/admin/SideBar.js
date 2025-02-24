@@ -46,7 +46,7 @@ const SideBar = () => {
                         <PersonOutlineIcon color={location.pathname.startsWith("/Admin/students") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Students" />
-                </ListItemButton>
+                </ListItemButton> {/*
                 <ListItemButton component={Link} to="/Admin/notices">
                     <ListItemIcon>
                         <AnnouncementOutlinedIcon color={location.pathname.startsWith("/Admin/notices") ? 'primary' : 'inherit'} />
@@ -58,7 +58,7 @@ const SideBar = () => {
                         <ReportIcon color={location.pathname.startsWith("/Admin/complains") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Complains" />
-                </ListItemButton>
+                </ListItemButton> */}
             </React.Fragment>
             <Divider sx={{ my: 0 }} />
             <React.Fragment>
