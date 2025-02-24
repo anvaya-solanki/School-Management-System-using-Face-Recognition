@@ -49,7 +49,7 @@ const ViewStudent = () => {
     const [password, setPassword] = useState('');
     const [sclassName, setSclassName] = useState('');
     const [studentSchool, setStudentSchool] = useState('');
-    const [subjectMarks, setSubjectMarks] = useState('');
+    //const [subjectMarks, setSubjectMarks] = useState('');
     const [subjectAttendance, setSubjectAttendance] = useState([]);
     const [imageUrl, setImageUrl] = useState(null);  // State to store the image URL
 
@@ -86,7 +86,7 @@ const ViewStudent = () => {
             setRollNum(userDetails.rollNum || '');
             setSclassName(userDetails.sclassName || '');
             setStudentSchool(userDetails.school || '');
-            setSubjectMarks(userDetails.examResult || '');
+            //setSubjectMarks(userDetails.examResult || '');
             setSubjectAttendance(userDetails.attendance || []);
         }
     }, [userDetails]);
@@ -268,7 +268,7 @@ const ViewStudent = () => {
             </>
         )
     }
-
+/*
     const StudentMarksSection = () => {
         const renderTableSection = () => {
             return (
@@ -339,7 +339,7 @@ const ViewStudent = () => {
             </>
         )
     }
-
+*/
     const StudentDetailsSection = () => {
         useEffect(() => {
             if (userDetails && userDetails.imageUrl) {
@@ -426,7 +426,8 @@ const ViewStudent = () => {
                                 <TabList onChange={handleChange} sx={{ position: 'fixed', width: '100%', bgcolor: 'background.paper', zIndex: 1 }}>
                                     <Tab label="Details" value="1" />
                                     <Tab label="Attendance" value="2" />
-                                    <Tab label="Marks" value="3" />
+                                    {//<Tab label="Marks" value="3" />
+                                    }
                                 </TabList>
                             </Box>
                             <Container sx={{ marginTop: "3rem", marginBottom: "4rem" }}>
@@ -436,9 +437,9 @@ const ViewStudent = () => {
                                 <TabPanel value="2">
                                     <StudentAttendanceSection />
                                 </TabPanel>
-                                <TabPanel value="3">
+                              { /* <TabPanel value="3">
                                     <StudentMarksSection />
-                                </TabPanel>
+                                </TabPanel> */ }
                             </Container>
                         </TabContext>
                     </Box>
