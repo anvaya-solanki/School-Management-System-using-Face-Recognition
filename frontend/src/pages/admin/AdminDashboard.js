@@ -91,14 +91,6 @@ const AdminDashboard = () => {
                         <Route path='*' element={<Navigate to="/" />} />
                         <Route path="/Admin/dashboard" element={<AdminHomePage />} />
                         <Route path="/Admin/profile" element={<AdminProfile />} />
-<<<<<<< Updated upstream
-                        <Route path="/Admin/complains" element={<SeeComplains />} />
-
-                        {/* Notice */}
-                        <Route path="/Admin/addnotice" element={<AddNotice />} />
-                        <Route path="/Admin/notices" element={<ShowNotices />} />
-=======
->>>>>>> Stashed changes
 
                         {/* Subject */}
                         <Route path="/Admin/subjects" element={<ShowSubjects />} />
