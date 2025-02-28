@@ -19,33 +19,34 @@ const SideBar = () => {
             <React.Fragment>
                 <ListItemButton component={Link} to="/">
                     <ListItemIcon>
-                        <HomeIcon color={location.pathname === ("/" || "/Admin/dashboard") ? 'primary' : 'inherit'} />
+                        <HomeIcon color={location.pathname === ("/" || "/Admin/dashboard") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Home" />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Admin/classes">
                     <ListItemIcon>
-                        <ClassOutlinedIcon color={location.pathname.startsWith('/Admin/classes') ? 'primary' : 'inherit'} />
+                        <ClassOutlinedIcon color={location.pathname.startsWith('/Admin/classes') ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Classes" />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Admin/subjects">
                     <ListItemIcon>
-                        <AssignmentIcon color={location.pathname.startsWith("/Admin/subjects") ? 'primary' : 'inherit'} />
+                        <AssignmentIcon color={location.pathname.startsWith("/Admin/subjects") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Subjects" />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Admin/teachers">
                     <ListItemIcon>
-                        <SupervisorAccountOutlinedIcon color={location.pathname.startsWith("/Admin/teachers") ? 'primary' : 'inherit'} />
+                        <SupervisorAccountOutlinedIcon color={location.pathname.startsWith("/Admin/teachers") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Teachers" />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Admin/students">
                     <ListItemIcon>
-                        <PersonOutlineIcon color={location.pathname.startsWith("/Admin/students") ? 'primary' : 'inherit'} />
+                        <PersonOutlineIcon color={location.pathname.startsWith("/Admin/students") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Students" />
+<<<<<<< Updated upstream
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Admin/notices">
                     <ListItemIcon>
@@ -59,6 +60,9 @@ const SideBar = () => {
                     </ListItemIcon>
                     <ListItemText primary="Complains" />
                 </ListItemButton>
+=======
+                </ListItemButton> 
+>>>>>>> Stashed changes
             </React.Fragment>
             <Divider sx={{ my: 0 }} />
             <React.Fragment>
@@ -67,13 +71,13 @@ const SideBar = () => {
                 </ListSubheader>
                 <ListItemButton component={Link} to="/Admin/profile">
                     <ListItemIcon>
-                        <AccountCircleOutlinedIcon color={location.pathname.startsWith("/Admin/profile") ? 'primary' : 'inherit'} />
+                        <AccountCircleOutlinedIcon color={location.pathname.startsWith("/Admin/profile") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Profile" />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/logout">
                     <ListItemIcon>
-                        <ExitToAppIcon color={location.pathname.startsWith("/logout") ? 'primary' : 'inherit'} />
+                        <ExitToAppIcon color={location.pathname.startsWith("/logout") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Logout" />
                 </ListItemButton>

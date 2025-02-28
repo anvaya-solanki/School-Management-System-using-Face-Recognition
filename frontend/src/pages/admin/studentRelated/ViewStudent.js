@@ -49,7 +49,10 @@ const ViewStudent = () => {
     const [password, setPassword] = useState('');
     const [sclassName, setSclassName] = useState('');
     const [studentSchool, setStudentSchool] = useState('');
+<<<<<<< Updated upstream
     const [subjectMarks, setSubjectMarks] = useState('');
+=======
+>>>>>>> Stashed changes
     const [subjectAttendance, setSubjectAttendance] = useState([]);
     const [imageUrl, setImageUrl] = useState(null);  // State to store the image URL
 
@@ -86,7 +89,10 @@ const ViewStudent = () => {
             setRollNum(userDetails.rollNum || '');
             setSclassName(userDetails.sclassName || '');
             setStudentSchool(userDetails.school || '');
+<<<<<<< Updated upstream
             setSubjectMarks(userDetails.examResult || '');
+=======
+>>>>>>> Stashed changes
             setSubjectAttendance(userDetails.attendance || []);
         }
     }, [userDetails]);
@@ -268,6 +274,7 @@ const ViewStudent = () => {
             </>
         )
     }
+<<<<<<< Updated upstream
 
     const StudentMarksSection = () => {
         const renderTableSection = () => {
@@ -340,6 +347,8 @@ const ViewStudent = () => {
         )
     }
 
+=======
+>>>>>>> Stashed changes
     const StudentDetailsSection = () => {
         useEffect(() => {
             if (userDetails && userDetails.imageUrl) {
@@ -436,9 +445,12 @@ const ViewStudent = () => {
                                 <TabPanel value="2">
                                     <StudentAttendanceSection />
                                 </TabPanel>
+<<<<<<< Updated upstream
                                 <TabPanel value="3">
                                     <StudentMarksSection />
                                 </TabPanel>
+=======
+>>>>>>> Stashed changes
                             </Container>
                         </TabContext>
                     </Box>

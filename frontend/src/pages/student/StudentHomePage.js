@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Grid, Paper, Typography } from '@mui/material'
+import { Container, Grid, Paper, Typography, AppBar, Toolbar } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { calculateOverallAttendancePercentage } from '../../components/attendanceCalculator';
 import CustomPieChart from '../../components/CustomPieChart';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
 import styled from 'styled-components';
-import SeeNotice from '../../components/SeeNotice';
+//import SeeNotice from '../../components/SeeNotice';
 import CountUp from 'react-countup';
 import Subject from "../../assets/subjects.svg";
 import Assignment from "../../assets/assignment.svg";
 import { getSubjectList } from '../../redux/sclassRelated/sclassHandle';
+
+
+
 
 const StudentHomePage = () => {
     const dispatch = useDispatch();
@@ -43,6 +46,11 @@ const StudentHomePage = () => {
     ];
     return (
         <>
+        <AppBar position="static" sx={{ backgroundColor: 'red' }}> {/* Change Color */}
+  <Toolbar>
+    <Typography variant="h6">Student Dashboard</Typography>
+  </Toolbar>
+</AppBar>
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={3} lg={3}>
@@ -91,11 +99,11 @@ const StudentHomePage = () => {
                             }
                         </ChartContainer>
                     </Grid>
-                    <Grid item xs={12}>
+                   {/* <Grid item xs={12}>
                         <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                             <SeeNotice />
                         </Paper>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Container>
         </>
