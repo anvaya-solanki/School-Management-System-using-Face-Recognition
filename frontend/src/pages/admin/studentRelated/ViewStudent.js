@@ -49,10 +49,6 @@ const ViewStudent = () => {
     const [password, setPassword] = useState('');
     const [sclassName, setSclassName] = useState('');
     const [studentSchool, setStudentSchool] = useState('');
-<<<<<<< Updated upstream
-    const [subjectMarks, setSubjectMarks] = useState('');
-=======
->>>>>>> Stashed changes
     const [subjectAttendance, setSubjectAttendance] = useState([]);
     const [imageUrl, setImageUrl] = useState(null);  // State to store the image URL
 
@@ -89,10 +85,6 @@ const ViewStudent = () => {
             setRollNum(userDetails.rollNum || '');
             setSclassName(userDetails.sclassName || '');
             setStudentSchool(userDetails.school || '');
-<<<<<<< Updated upstream
-            setSubjectMarks(userDetails.examResult || '');
-=======
->>>>>>> Stashed changes
             setSubjectAttendance(userDetails.attendance || []);
         }
     }, [userDetails]);
@@ -274,81 +266,6 @@ const ViewStudent = () => {
             </>
         )
     }
-<<<<<<< Updated upstream
-
-    const StudentMarksSection = () => {
-        const renderTableSection = () => {
-            return (
-                <>
-                    <h3>Subject Marks:</h3>
-                    <Table>
-                        <TableHead>
-                            <StyledTableRow>
-                                <StyledTableCell>Subject</StyledTableCell>
-                                <StyledTableCell>Marks</StyledTableCell>
-                            </StyledTableRow>
-                        </TableHead>
-                        <TableBody>
-                            {subjectMarks.map((result, index) => {
-                                if (!result.subName || !result.marksObtained) {
-                                    return null;
-                                }
-                                return (
-                                    <StyledTableRow key={index}>
-                                        <StyledTableCell>{result.subName.subName}</StyledTableCell>
-                                        <StyledTableCell>{result.marksObtained}</StyledTableCell>
-                                    </StyledTableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                    <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
-                        Add Marks
-                    </Button>
-                </>
-            )
-        }
-        const renderChartSection = () => {
-            return (
-                <>
-                    <CustomBarChart chartData={subjectMarks} dataKey="marksObtained" />
-                </>
-            )
-        }
-        return (
-            <>
-                {subjectMarks && Array.isArray(subjectMarks) && subjectMarks.length > 0
-                    ?
-                    <>
-                        {selectedSection === 'table' && renderTableSection()}
-                        {selectedSection === 'chart' && renderChartSection()}
-
-                        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-                            <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
-                                <BottomNavigationAction
-                                    label="Table"
-                                    value="table"
-                                    icon={selectedSection === 'table' ? <TableChartIcon /> : <TableChartOutlinedIcon />}
-                                />
-                                <BottomNavigationAction
-                                    label="Chart"
-                                    value="chart"
-                                    icon={selectedSection === 'chart' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
-                                />
-                            </BottomNavigation>
-                        </Paper>
-                    </>
-                    :
-                    <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
-                        Add Marks
-                    </Button>
-                }
-            </>
-        )
-    }
-
-=======
->>>>>>> Stashed changes
     const StudentDetailsSection = () => {
         useEffect(() => {
             if (userDetails && userDetails.imageUrl) {
@@ -435,7 +352,6 @@ const ViewStudent = () => {
                                 <TabList onChange={handleChange} sx={{ position: 'fixed', width: '100%', bgcolor: 'background.paper', zIndex: 1 }}>
                                     <Tab label="Details" value="1" />
                                     <Tab label="Attendance" value="2" />
-                                    <Tab label="Marks" value="3" />
                                 </TabList>
                             </Box>
                             <Container sx={{ marginTop: "3rem", marginBottom: "4rem" }}>
@@ -445,12 +361,6 @@ const ViewStudent = () => {
                                 <TabPanel value="2">
                                     <StudentAttendanceSection />
                                 </TabPanel>
-<<<<<<< Updated upstream
-                                <TabPanel value="3">
-                                    <StudentMarksSection />
-                                </TabPanel>
-=======
->>>>>>> Stashed changes
                             </Container>
                         </TabContext>
                     </Box>
