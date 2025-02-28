@@ -18,14 +18,9 @@ import AdminProfile from './AdminProfile';
 import AdminHomePage from './AdminHomePage';
 
 import AddStudent from './studentRelated/AddStudent';
-import SeeComplains from './studentRelated/SeeComplains';
 import ShowStudents from './studentRelated/ShowStudents';
 import StudentAttendance from './studentRelated/StudentAttendance';
-import StudentExamMarks from './studentRelated/StudentExamMarks';
 import ViewStudent from './studentRelated/ViewStudent';
-
-import AddNotice from './noticeRelated/AddNotice';
-import ShowNotices from './noticeRelated/ShowNotices';
 
 import ShowSubjects from './subjectRelated/ShowSubjects';
 import SubjectForm from './subjectRelated/SubjectForm';
@@ -52,7 +47,7 @@ const AdminDashboard = () => {
         <>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <AppBar open={open} position='absolute'>
+                <AppBar open={open} position='absolute' sx={{ backgroundColor: '#9c27b0' }}>
                     <Toolbar sx={{ pr: '24px' }}>
                         <IconButton
                             edge="start"
@@ -96,11 +91,6 @@ const AdminDashboard = () => {
                         <Route path='*' element={<Navigate to="/" />} />
                         <Route path="/Admin/dashboard" element={<AdminHomePage />} />
                         <Route path="/Admin/profile" element={<AdminProfile />} />
-                        {/*<Route path="/Admin/complains" element={<SeeComplains />} />*/}
-
-                        {/* Notice 
-                        <Route path="/Admin/addnotice" element={<AddNotice />} />
-                        <Route path="/Admin/notices" element={<ShowNotices />} /> */ }
 
                         {/* Subject */}
                         <Route path="/Admin/subjects" element={<ShowSubjects />} />
@@ -111,7 +101,6 @@ const AdminDashboard = () => {
                         <Route path="/Admin/class/subject/:classID/:subjectID" element={<ViewSubject />} />
 
                         <Route path="/Admin/subject/student/attendance/:studentID/:subjectID" element={<StudentAttendance situation="Subject" />} />
-                        <Route path="/Admin/subject/student/marks/:studentID/:subjectID" element={<StudentExamMarks situation="Subject" />} />
 
                         {/* Class */}
                         <Route path="/Admin/addclass" element={<AddClass />} />
@@ -124,7 +113,6 @@ const AdminDashboard = () => {
                         <Route path="/Admin/students" element={<ShowStudents />} />
                         <Route path="/Admin/students/student/:id" element={<ViewStudent />} />
                         <Route path="/Admin/students/student/attendance/:id" element={<StudentAttendance situation="Student" />} />
-                        <Route path="/Admin/students/student/marks/:id" element={<StudentExamMarks situation="Student" />} />
 
                         {/* Teacher */}
                         <Route path="/Admin/teachers" element={<ShowTeachers />} />
