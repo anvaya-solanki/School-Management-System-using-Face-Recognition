@@ -4,8 +4,6 @@ const Sclass = require('../models/sclassSchema.js');
 const Student = require('../models/studentSchema.js');
 const Teacher = require('../models/teacherSchema.js');
 const Subject = require('../models/subjectSchema.js');
-const Notice = require('../models/noticeSchema.js');
-const Complain = require('../models/complainSchema.js');
 
 // const adminRegister = async (req, res) => {
 //     try {
