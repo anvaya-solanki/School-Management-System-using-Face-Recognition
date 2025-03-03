@@ -1,4 +1,5 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 
 // const { adminRegister, adminLogIn, deleteAdmin, getAdminDetail, updateAdmin } = require('../controllers/admin-controller.js');
 
@@ -58,6 +59,25 @@ router.put('/RemoveAllStudentsAtten/:id', clearAllStudentsAttendance);
 
 router.put('/RemoveStudentSubAtten/:id', removeStudentAttendanceBySubject);
 router.put('/RemoveStudentAtten/:id', removeStudentAttendance)
+
+router.put('/update/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updatedData = req.body;
+  
+      const student = await Student.findByIdAndUpdate(id, updatedData, { new: true });
+  
+      if (!student) {
+        return res.status(404).json({ message: "Student not found" });
+      }
+
+      res.json(student);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+  
 
 // Teacher
 

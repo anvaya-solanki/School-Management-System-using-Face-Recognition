@@ -5,7 +5,6 @@ import { calculateOverallAttendancePercentage } from '../../components/attendanc
 import CustomPieChart from '../../components/CustomPieChart';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
 import styled from 'styled-components';
-import SeeNotice from '../../components/SeeNotice';
 import CountUp from 'react-countup';
 import Subject from "../../assets/subjects.svg";
 import Assignment from "../../assets/assignment.svg";
@@ -90,11 +89,6 @@ const StudentHomePage = () => {
                                     </>
                             }
                         </ChartContainer>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                            <SeeNotice />
-                        </Paper>
                     </Grid>
                 </Grid>
             </Container>
