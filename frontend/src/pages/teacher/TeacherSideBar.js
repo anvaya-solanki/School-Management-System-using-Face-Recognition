@@ -19,21 +19,15 @@ const TeacherSideBar = () => {
             <React.Fragment>
                 <ListItemButton component={Link} to="/">
                     <ListItemIcon>
-                        <HomeIcon color={location.pathname === ("/" || "/Teacher/dashboard") ? 'primary' : 'inherit'} />
+                        <HomeIcon color={location.pathname === ("/" || "/Teacher/dashboard") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Home" />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Teacher/class">
                     <ListItemIcon>
-                        <ClassOutlinedIcon color={location.pathname.startsWith("/Teacher/class") ? 'primary' : 'inherit'} />
+                        <ClassOutlinedIcon color={location.pathname.startsWith("/Teacher/class") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary={`Class ${sclassName.sclassName}`} />
-                </ListItemButton>
-                <ListItemButton component={Link} to="/Teacher/complain">
-                    <ListItemIcon>
-                        <AnnouncementOutlinedIcon color={location.pathname.startsWith("/Teacher/complain") ? 'primary' : 'inherit'} />
-                    </ListItemIcon>
-                    <ListItemText primary="Complain" />
                 </ListItemButton>
             </React.Fragment>
             <Divider sx={{ my: 0 }} />
@@ -43,13 +37,13 @@ const TeacherSideBar = () => {
                 </ListSubheader>
                 <ListItemButton component={Link} to="/Teacher/profile">
                     <ListItemIcon>
-                        <AccountCircleOutlinedIcon color={location.pathname.startsWith("/Teacher/profile") ? 'primary' : 'inherit'} />
+                        <AccountCircleOutlinedIcon color={location.pathname.startsWith("/Teacher/profile") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Profile" />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/logout">
                     <ListItemIcon>
-                        <ExitToAppIcon color={location.pathname.startsWith("/logout") ? 'primary' : 'inherit'} />
+                        <ExitToAppIcon color={location.pathname.startsWith("/logout") ? 'secondary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Logout" />
                 </ListItemButton>
