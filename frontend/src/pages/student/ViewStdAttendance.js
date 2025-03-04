@@ -4,6 +4,7 @@ import { BottomNavigation, BottomNavigationAction, Box, Button, Collapse, Paper,
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
 import { calculateOverallAttendancePercentage, calculateSubjectAttendancePercentage, groupAttendanceBySubject } from '../../components/attendanceCalculator';
+import { updateStudentFieldsEmbeddings } from '../../redux/studentRelated/studentHandle';
 
 import CustomBarChart from '../../components/CustomBarChart'
 
@@ -16,7 +17,11 @@ import Webcam from "react-webcam";
 
 const ViewStdAttendance = () => {
     const dispatch = useDispatch();
-
+    const [studentID, setStudentID] = useState("");
+    const [subjectName, setSubjectName] = useState("");
+    const [chosenSubName, setChosenSubName] = useState("");
+    const [status, setStatus] = useState('Present');
+    const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [openStates, setOpenStates] = useState({});
 
     const handleOpen = (subId) => {
@@ -32,10 +37,33 @@ const ViewStdAttendance = () => {
 
     const handleOpenWebcam = () => setOpenWebcam(true);
     const handleCloseWebcam = () => setOpenWebcam(false);
-
-    const captureAttendance = () => {
+    // const fields = { subName: chosenSubName, status, date }
+    const captureAttendance = async () => {
+        // console.log(`${subName}`)
         const imageSrc = webcamRef.current.getScreenshot();
         console.log("Captured Image:", imageSrc); // Send this to backend for processing
+        // console.log(currentUser._id, fields)
+        // Convert base64 to Blob
+        const response = await fetch(imageSrc);
+        const blob = await response.blob();
+        const file = new File([blob], "attendance.jpg", { type: "image/jpeg" });
+
+        // Create FormData for multipart upload
+        const formData = new FormData();
+        formData.append("studentID", currentUser._id);
+        formData.append("subName", chosenSubName);
+        formData.append("status", status);
+        formData.append("date", date);
+        formData.append("image", file);
+
+        console.log("Sending attendance data...");
+        // Log FormData contents
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ": " + pair[1]);
+        }
+
+        dispatch(updateStudentFieldsEmbeddings(formData, "StudentAttendanceEmbeddings"))
+        console.log("Back to frontend")
         handleCloseWebcam();
     };
 
@@ -60,6 +88,7 @@ const ViewStdAttendance = () => {
     const overallAttendancePercentage = calculateOverallAttendancePercentage(subjectAttendance);
 
     const subjectData = Object.entries(attendanceBySubject).map(([subName, { subCode, present, sessions }]) => {
+        
         const subjectAttendancePercentage = calculateSubjectAttendancePercentage(present, sessions);
         return {
             subject: subName,

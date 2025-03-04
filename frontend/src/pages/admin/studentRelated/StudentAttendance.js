@@ -64,6 +64,8 @@ const StudentAttendance = ({ situation }) => {
     const submitHandler = (event) => {
         event.preventDefault()
         setLoader(true)
+        console.log(studentID, fields);
+        console.log('3. In StudentAttendance submitHandler Function moving to updateStudentFields')
         dispatch(updateStudentFields(studentID, fields, "StudentAttendance"))
     }
 

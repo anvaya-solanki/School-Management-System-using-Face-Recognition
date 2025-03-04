@@ -58,7 +58,7 @@ const TeacherClassDetails = () => {
         const [selectedIndex, setSelectedIndex] = React.useState(0);
 
         const handleClick = () => {
-            console.info(`You clicked ${options[selectedIndex]}`);
+            console.info(`1. You clicked ${options[selectedIndex]}`);
             if (selectedIndex === 0) {
                 handleAttendance();
             } else if (selectedIndex === 1) {
@@ -67,6 +67,7 @@ const TeacherClassDetails = () => {
         };
 
         const handleAttendance = () => {
+            console.log('2. In handle Attendance')
             navigate(`/Teacher/class/student/attendance/${row.id}/${subjectID}`)
         }
         const handleMarks = () => {
@@ -157,7 +158,6 @@ const TeacherClassDetails = () => {
 
     return (
         <>
-
             {loading ? (
                 <div>Loading...</div>
             ) : (

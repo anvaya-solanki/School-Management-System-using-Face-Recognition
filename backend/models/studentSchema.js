@@ -63,33 +63,6 @@ const studentSchema = new mongoose.Schema({
         type: [Number], 
         required: true 
     },
-
-    // 🔹 Added Personal Information Fields
-    dateOfBirth: {
-        type: String,
-        default: "January 1, 2000"
-    },
-    gender: {
-        type: String,
-        enum: ['Male', 'Female', 'Other'],
-        default: "Male"
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    phone: {
-        type: String,
-        default: ""
-    },
-    address: {
-        type: String,
-        default: ""
-    },
-    emergencyContact: {
-        type: String,
-        default: ""
-    }
 });
 
 module.exports = mongoose.model("student", studentSchema);

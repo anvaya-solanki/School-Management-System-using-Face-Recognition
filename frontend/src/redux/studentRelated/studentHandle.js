@@ -24,12 +24,32 @@ export const getAllStudents = (id) => async (dispatch) => {
 }
 
 export const updateStudentFields = (id, fields, address) => async (dispatch) => {
+    console.log('4. In studentHandle')
     dispatch(getRequest());
 
     try {
+        console.log("5. Inside it's try catch", address)
         const result = await axios.put(`${REACT_APP_BASE_URL}/${address}/${id}`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
+        if (result.data.message) {
+            dispatch(getFailed(result.data.message));
+        } else {
+            dispatch(stuffDone());
+        }
+    } catch (error) {
+        dispatch(getError(error));
+    }
+}
+
+export const updateStudentFieldsEmbeddings = (formData, address) => async (dispatch) => {
+    dispatch(getRequest());
+    console.log("Inside updateStudentFieldsEmbeddings", address, formData)
+    try {
+        const result = await axios.put(`${REACT_APP_BASE_URL}/${address}`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        console.log("Request sent")
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
