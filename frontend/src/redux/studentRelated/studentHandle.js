@@ -27,8 +27,10 @@ export const updateStudentFields = (id, fields, address) => async (dispatch) => 
     dispatch(getRequest());
 
     try {
+        console.log("5. Inside it's try catch", address)
+        console.log("Fields being sent:", fields); 
         const result = await axios.put(`${REACT_APP_BASE_URL}/${address}/${id}`, fields, {
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'multipart/form-data' },
         });
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
