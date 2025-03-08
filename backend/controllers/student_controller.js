@@ -296,8 +296,42 @@ const studentAttendance = async (req, res) => {
             if (attendedSessions >= subject.sessions) {
                 return res.send({ message: 'Maximum attendance limit reached' });
             }
-            // Run code
-            student.attendance.push({ date, status, subName });
+            const runPythonVerification = (studentId, imagePath) => {
+                return new Promise((resolve, reject) => {
+                    const pythonProcess = spawn('python', [
+                        'mark_attendance.py', // update with the correct path
+                        studentId,
+                        req.file.path, // path to the uploaded image
+                    ]);
+
+                    let output = '';
+                    pythonProcess.stdout.on('data', (data) => {
+                        output += data.toString();
+                    });
+
+                    pythonProcess.stderr.on('data', (data) => {
+                        console.error('Python error:', data.toString());
+                    });
+
+                    pythonProcess.on('close', (code) => {
+                        if (code !== 0) {
+                            return reject(new Error(`Python process exited with code ${code}`));
+                        }
+                        resolve(output.trim()); // Expected to be "True" or "False"
+                    });
+                });
+            };
+
+            const verificationResult = await runPythonVerification(req.params.id, req.file.path);
+            console.log("Verification Result:", verificationResult);
+
+            if (verificationResult === "True") {
+                // Only push attendance if face matches
+                student.attendance.push({ date, status, subName });
+            } else {
+                return res.send({ message: "Face does not match" });
+            }
+
         }
 
         const result = await student.save();
