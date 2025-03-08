@@ -47,7 +47,7 @@ router.delete("/Student/:id", deleteStudent)
 
 router.put("/Student/:id", updateStudent)
 
-router.put('/StudentAttendance/:id', studentAttendance)
+router.put('/StudentAttendance/:id', upload, studentAttendance)
 
 router.put('/RemoveAllStudentsSubAtten/:id', clearAllStudentsAttendanceBySubject);
 router.put('/RemoveAllStudentsAtten/:id', clearAllStudentsAttendance);

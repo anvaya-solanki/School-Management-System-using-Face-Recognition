@@ -263,8 +263,14 @@ const updateExamResult = async (req, res) => {
 
 const studentAttendance = async (req, res) => {
     const { subName, status, date } = req.body;
-
+    console.log("Inside student controller studentAttendance function")
+    console.log("Received File:", req.file);
     try {
+        if (!req.file) {
+            console.log("No image received");
+        } else {
+            console.log("Image received:", req.file.originalname); // Log image name
+        }
         const student = await Student.findById(req.params.id);
 
         if (!student) {
@@ -290,7 +296,7 @@ const studentAttendance = async (req, res) => {
             if (attendedSessions >= subject.sessions) {
                 return res.send({ message: 'Maximum attendance limit reached' });
             }
-
+            // Run code
             student.attendance.push({ date, status, subName });
         }
 
@@ -298,6 +304,50 @@ const studentAttendance = async (req, res) => {
         return res.send(result);
     } catch (error) {
         res.status(500).json(error);
+        console.log(error.message)
+    }
+};
+
+const studentAttendanceEmbeddings = async (req, res) => {
+    console.log(req.body)
+    console.log("Inside student controller studentAttendance function")
+    try {
+        const student = await Student.findById(req.params.id);
+        console.log("Inside try")
+        if (!student) {
+            return res.send({ message: 'Student not found' });
+        }
+
+        const subject = await Subject.findById(subName);
+        console.log(subject)
+        const existingAttendance = student.attendance.find(
+            (a) =>
+                a.date.toDateString() === new Date(date).toDateString() &&
+                a.subName.toString() === subName
+        );
+
+        if (existingAttendance) {
+            existingAttendance.status = status;
+            console.log(status)
+        } else {
+            // Check if the student has already attended the maximum number of sessions
+            const attendedSessions = student.attendance.filter(
+                (a) => a.subName.toString() === subName
+            ).length;
+
+            if (attendedSessions >= subject.sessions) {
+                return res.send({ message: 'Maximum attendance limit reached' });
+            }
+
+            student.attendance.push({ date, status, subName });
+        }
+
+        const result = await student.save();
+        return res.send(result);
+    } catch (error) {
+        console.log('Inside catch')
+        res.status(500).json(error);
+        console.log(error.message)
     }
 };
 
@@ -373,6 +423,7 @@ module.exports = {
     deleteStudent,
     updateStudent,
     studentAttendance,
+    studentAttendanceEmbeddings,
     deleteStudentsByClass,
     updateExamResult,
 
