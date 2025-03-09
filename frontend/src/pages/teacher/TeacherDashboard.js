@@ -19,7 +19,6 @@ import StudentAttendance from '../admin/studentRelated/StudentAttendance';
 
 import TeacherClassDetails from './TeacherClassDetails'
 import TeacherHomePage from './TeacherHomePage';
-import TeacherComplain from './TeacherComplain';
 import TeacherProfile from './TeacherProfile';
 import TeacherViewStudent from './TeacherViewStudent';
 import SeeComplains from '../admin/studentRelated/SeeComplains';
@@ -78,8 +77,6 @@ const TeacherDashboard = () => {
                         <Route path='*' element={<Navigate to="/" />} />
                         <Route path="/Teacher/dashboard" element={<TeacherHomePage />} />
                         <Route path="/Teacher/profile" element={<TeacherProfile />} />
-
-                        <Route path="/Teacher/complain" element={<TeacherComplain />} />
 
                         <Route path="/Teacher/class" element={<TeacherClassDetails />} />
                         <Route path="/Teacher/class/student/:id" element={<TeacherViewStudent />} />
