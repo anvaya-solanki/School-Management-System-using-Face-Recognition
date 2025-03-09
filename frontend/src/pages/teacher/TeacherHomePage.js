@@ -7,6 +7,7 @@ import Tests from "../../assets/assignment.svg";
 import Time from "../../assets/time.svg";
 import { getClassStudents, getSubjectDetails } from '../../redux/sclassRelated/sclassHandle';
 import { useDispatch, useSelector } from 'react-redux';
+import SeeNotice from '../../components/SeeNotice';
 import { useEffect } from 'react';
 
 const TeacherHomePage = () => {
@@ -63,8 +64,13 @@ const TeacherHomePage = () => {
                             <Title>
                                 Total Hours
                             </Title>
-                            <Data start={0} end={30} duration={4} suffix="hrs"/>                       
+                            <Data start={0} end={30} duration={4} suffix="hrs" />
                         </StyledPaper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                            <SeeNotice />
+                        </Paper>
                     </Grid>
                 </Grid>
             </Container>

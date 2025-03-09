@@ -6,6 +6,8 @@ const router = express.Router();
 const { adminRegister, adminLogIn, getAdminDetail} = require('../controllers/admin-controller.js');
 
 const { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail, getSclassStudents, getSclassTeachers } = require('../controllers/class-controller.js');
+const { complainCreate, complainList } = require('../controllers/complain-controller.js');
+const { noticeCreate, noticeList, deleteNotices, deleteNotice, updateNotice } = require('../controllers/notice-controller.js');
 const {
     upload,
     studentRegister,
@@ -17,6 +19,7 @@ const {
     updateStudent,
     studentAttendance,
     deleteStudentsByClass,
+    updateExamResult,
     clearAllStudentsAttendanceBySubject,
     clearAllStudentsAttendance,
     removeStudentAttendanceBySubject,
@@ -46,6 +49,8 @@ router.delete("/StudentsClass/:id", deleteStudentsByClass)
 router.delete("/Student/:id", deleteStudent)
 
 router.put("/Student/:id", updateStudent)
+
+router.put('/UpdateExamResult/:id', updateExamResult)
 
 router.put('/StudentAttendance/:id', upload, studentAttendance)
 
@@ -106,6 +111,23 @@ router.get("/Sclass/Teachers/:id", getSclassTeachers)
 
 router.delete("/Sclasses/:id", deleteSclasses)
 router.delete("/Sclass/:id", deleteSclass)
+
+// Notice
+
+router.post('/NoticeCreate', noticeCreate);
+
+router.get('/NoticeList/:id', noticeList);
+
+router.delete("/Notices/:id", deleteNotices)
+router.delete("/Notice/:id", deleteNotice)
+
+router.put("/Notice/:id", updateNotice)
+
+// Complain
+
+router.post('/ComplainCreate', complainCreate);
+
+router.get('/ComplainList/:id', complainList);
 
 // Subject
 

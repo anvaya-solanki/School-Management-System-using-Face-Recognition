@@ -1,4 +1,5 @@
 import { Container, Grid, Paper } from '@mui/material'
+import SeeNotice from '../../components/SeeNotice';
 import Classes from "../../assets/img2.png";
 import newStudents from "../../assets/img6.jpg"
 import newTeachers from "../../assets/img7.jpg"
@@ -37,7 +38,7 @@ const AdminHomePage = () => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={3} lg={3}>
                         <StyledPaper>
-                            <img src={newStudents} alt="Students"/>
+                            <img src={newStudents} alt="Students" />
                             <Title>
                                 Total Students
                             </Title>
@@ -69,6 +70,11 @@ const AdminHomePage = () => {
                                 Fees Collection
                             </Title>
                             <Data start={0} end={numberOfStudents * 50000} duration={2.5} prefix="₹" />                        </StyledPaper>
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                            <SeeNotice />
+                        </Paper>
                     </Grid>
                 </Grid>
             </Container>

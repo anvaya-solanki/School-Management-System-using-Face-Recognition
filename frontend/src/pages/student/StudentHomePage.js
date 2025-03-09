@@ -7,6 +7,7 @@ import { getUserDetails } from '../../redux/userRelated/userHandle';
 import styled from 'styled-components';
 import CountUp from 'react-countup';
 import Subject from "../../assets/subjects.svg";
+import SeeNotice from '../../components/SeeNotice';
 import Assignment from "../../assets/assignment.svg";
 import { getSubjectList } from '../../redux/sclassRelated/sclassHandle';
 
@@ -89,6 +90,11 @@ const StudentHomePage = () => {
                                     </>
                             }
                         </ChartContainer>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                            <SeeNotice />
+                        </Paper>
                     </Grid>
                 </Grid>
             </Container>
