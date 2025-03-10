@@ -16,12 +16,11 @@ import Logout from '../Logout'
 import AccountMenu from '../../components/AccountMenu';
 import { AppBar, Drawer } from '../../components/styles';
 import StudentAttendance from '../admin/studentRelated/StudentAttendance';
-
+import StudentExamMarks from '../admin/studentRelated/StudentExamMarks'
 import TeacherClassDetails from './TeacherClassDetails'
 import TeacherHomePage from './TeacherHomePage';
 import TeacherProfile from './TeacherProfile';
 import TeacherViewStudent from './TeacherViewStudent';
-import SeeComplains from '../admin/studentRelated/SeeComplains';
 
 const TeacherDashboard = () => {
     const [open, setOpen] = useState(true);
@@ -82,6 +81,7 @@ const TeacherDashboard = () => {
                         <Route path="/Teacher/class/student/:id" element={<TeacherViewStudent />} />
 
                         <Route path="/Teacher/class/student/attendance/:studentID/:subjectID" element={<StudentAttendance situation="Subject" />} />
+                        <Route path="/Teacher/class/student/marks/:studentID/:subjectID" element={<StudentExamMarks situation="Subject" />} />
 
                         <Route path="/logout" element={<Logout />} />
                     </Routes>

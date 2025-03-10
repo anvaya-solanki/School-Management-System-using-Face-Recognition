@@ -103,13 +103,10 @@ const StudentAttendance = ({ situation }) => {
             }
         }, "image/png");
 
-        stopCamera(); // Stop the camera after capture
-        setOpenCamera(false); // Close modal
+        stopCamera();
+        setOpenCamera(false); 
     }
     };
-
-    // const fields = { subName: chosenSubName, status, date }
-    const fields = { subName: chosenSubName, status, date, capturedImage }
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -119,14 +116,13 @@ const StudentAttendance = ({ situation }) => {
         formData.append("subName", chosenSubName);
         formData.append("status", status);
         formData.append("date", date);
-        formData.append("image", capturedImage); // Ensure this is correctly set
+        formData.append("image", capturedImage); 
 
         console.log("Sending formData:", formData);
 
         dispatch(updateStudentFields(studentID, formData, "StudentAttendance"));
         // console.log(studentID, fields);
         // console.log('3. In StudentAttendance submitHandler Function moving to updateStudentFields')
-        // dispatch(updateStudentFields(studentID, fields, "StudentAttendance"))
     }
 
     useEffect(() => {

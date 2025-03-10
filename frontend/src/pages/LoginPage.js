@@ -74,23 +74,23 @@ const LoginPage = ({ role }) => {
     };
 
     const guestModeHandler = () => {
-        const password = "zxc"
+        const password = "xyz"
 
         if (role === "Admin") {
-            const email = "yogendra@12"
+            const email = "we@cohort5.com"
             const fields = { email, password }
             setGuestLoader(true)
             dispatch(loginUser(fields, role))
         }
         else if (role === "Student") {
-            const rollNum = "1"
-            const studentName = "Dipesh Awasthi"
+            const rollNum = "12"
+            const studentName = "Anvaya Solanki"
             const fields = { rollNum, studentName, password }
             setGuestLoader(true)
             dispatch(loginUser(fields, role))
         }
         else if (role === "Teacher") {
-            const email = "tony@12"
+            const email = "guest@teacher.com"
             const fields = { email, password }
             setGuestLoader(true)
             dispatch(loginUser(fields, role))
@@ -232,14 +232,6 @@ const LoginPage = ({ role }) => {
                                     <CircularProgress size={24} color="inherit" />
                                     : "Login"}
                             </LightPurpleButton>
-                            <Button
-                                fullWidth
-                                onClick={guestModeHandler}
-                                variant="outlined"
-                                sx={{ mt: 2, mb: 3, color: "#7f56da", borderColor: "#7f56da" }}
-                            >
-                                Login as Guest
-                            </Button>
                             {role === "Admin" &&
                                 <Grid container>
                                     <Grid>

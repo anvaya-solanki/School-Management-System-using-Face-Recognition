@@ -141,23 +141,6 @@ const ViewStdAttendance = () => {
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>
-                                <Button variant="contained" color="primary" onClick={handleOpenWebcam}>
-                                    Take Attendance
-                                </Button>
-                                <Modal open={openWebcam} onClose={handleCloseWebcam}>
-                                    <Box sx={{ p: 4, backgroundColor: "white", borderRadius: 2 }}>
-                                        <Typography variant="h6">Capture Attendance</Typography>
-                                        <Webcam
-                                            ref={webcamRef}
-                                            screenshotFormat="image/jpeg"
-                                            width={400}
-                                            height={300}
-                                        />
-                                        <Button variant="contained" color="success" onClick={captureAttendance}>
-                                            Capture Image
-                                        </Button>
-                                    </Box>
-                                </Modal>
                             </>
                         )
                     }

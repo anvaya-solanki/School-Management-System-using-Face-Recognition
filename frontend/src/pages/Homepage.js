@@ -30,13 +30,6 @@ const Homepage = () => {
                                     Login
                                 </LightPurpleButton>
                             </StyledLink>
-                            <StyledLink to="/chooseasguest">
-                                <Button variant="outlined" fullWidth
-                                    sx={{ mt: 2, mb: 3, color: "#782bfu", borderColor: "#782bfu" }}
-                                >
-                                    Login as Guest
-                                </Button>
-                            </StyledLink>
                             <StyledText>
                                 Don't have an account?{' '}
                                 <Link to="/Adminregister" style={{ color: "782bfu" }}>

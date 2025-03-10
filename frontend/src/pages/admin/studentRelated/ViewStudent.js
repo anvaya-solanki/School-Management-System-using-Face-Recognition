@@ -281,14 +281,6 @@ const ViewStudent = () => {
                 Class: {sclassName.sclassName}
                 <br />
                 School: {studentSchool.schoolName}
-                <br />
-                Image:
-                {imageUrl && (
-                    <div>
-                        {/* Display image if imageUrl is available */}
-                        <img src={`data:image/jpeg;base64,${imageUrl}`} alt="Student" style={{ width: 100, height: 100 }} />
-                    </div>
-                )}
                 {
                     subjectAttendance && Array.isArray(subjectAttendance) && subjectAttendance.length > 0 && (
                         <CustomPieChart data={chartData} />
@@ -298,41 +290,6 @@ const ViewStudent = () => {
                 <Button variant="contained" sx={styles.styledButton} onClick={deleteHandler}>
                     Delete
                 </Button>
-                <br />
-                {/* <Button variant="contained" sx={styles.styledButton} className="show-tab" onClick={() => { setShowTab(!showTab) }}>
-                    {
-                        showTab
-                            ? <KeyboardArrowUp />
-                            : <KeyboardArrowDown />
-                    }
-                    Edit Student
-                </Button>
-                <Collapse in={showTab} timeout="auto" unmountOnExit>
-                    <div className="register">
-                        <form className="registerForm" onSubmit={submitHandler}>
-                            <span className="registerTitle">Edit Details</span>
-                            <label>Name</label>
-                            <input className="registerInput" type="text" placeholder="Enter user's name..."
-                                value={name}
-                                onChange={(event) => setName(event.target.value)}
-                                autoComplete="name" required />
-
-                            <label>Roll Number</label>
-                            <input className="registerInput" type="number" placeholder="Enter user's Roll Number..."
-                                value={rollNum}
-                                onChange={(event) => setRollNum(event.target.value)}
-                                required />
-
-                            <label>Password</label>
-                            <input className="registerInput" type="password" placeholder="Enter user's password..."
-                                value={password}
-                                onChange={(event) => setPassword(event.target.value)}
-                                autoComplete="new-password" />
-
-                            <button className="registerButton" type="submit" >Update</button>
-                        </form>
-                    </div>
-                </Collapse> */}
             </div>
         )
     }

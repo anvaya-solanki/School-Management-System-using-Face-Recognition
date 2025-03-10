@@ -16,7 +16,7 @@ def fetch_student_embedding(student_id):
     """
     student = students_collection.find_one({"_id": ObjectId(student_id)}, {"embeddings": 1})
     if student and "embeddings" in student:
-        return np.array(student["embeddings"])  # Convert stored list to a NumPy array
+        return np.array(student["embeddings"])  
     return None
 
 def compare_embeddings(captured_embedding, stored_embedding, threshold=0.5):
@@ -32,7 +32,6 @@ def verify_attendance(student_id, image_path):
     Given a student ID and an image path, extract the face embedding from the image
     and compare it with the stored embedding. Returns True if they match, False otherwise.
     """
-    # Load the captured image and extract face embeddings
     captured_image = face_recognition.load_image_file(image_path)
     captured_encodings = face_recognition.face_encodings(captured_image)
 
@@ -42,13 +41,11 @@ def verify_attendance(student_id, image_path):
 
     captured_embedding = captured_encodings[0]
 
-    # Fetch the student's stored embedding
     stored_embedding = fetch_student_embedding(student_id)
     if stored_embedding is None:
         print("No embeddings found for this student ID.")
         return False
 
-    # Compare the embeddings
     return compare_embeddings(captured_embedding, stored_embedding)
 
 if __name__ == "__main__":
@@ -59,4 +56,4 @@ if __name__ == "__main__":
     student_id = sys.argv[1]
     image_path = sys.argv[2]
     result = verify_attendance(student_id, image_path)
-    print(result)  # This will print True if the face matches, False otherwise.
+    print(result)  

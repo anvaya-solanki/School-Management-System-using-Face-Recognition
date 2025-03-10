@@ -10,9 +10,6 @@ const PORT = process.env.PORT || 5000
 
 dotenv.config();
 
-// app.use(bodyParser.json({ limit: '10mb', extended: true }))
-// app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
-
 app.use(express.json({ limit: '10mb' }))
 app.use(cors({origin: "*", credentials: true}))
 

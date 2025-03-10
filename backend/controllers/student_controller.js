@@ -18,37 +18,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage }).single('image');
 
-// const studentRegister = async (req, res) => {
-//     try {
-//         const salt = await bcrypt.genSalt(10);
-//         const hashedPass = await bcrypt.hash(req.body.password, salt);
-
-//         const existingStudent = await Student.findOne({
-//             rollNum: req.body.rollNum,
-//             school: req.body.adminID,
-//             sclassName: req.body.sclassName,
-//         });
-
-//         if (existingStudent) {
-//             res.send({ message: 'Roll Number already exists' });
-//         }
-//         else {
-//             const student = new Student({
-//                 ...req.body,
-//                 school: req.body.adminID,
-//                 password: hashedPass
-//             });
-
-//             let result = await student.save();
-
-//             result.password = undefined;
-//             res.send(result);
-//         }
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-// };
-
 const studentRegister = async (req, res) => {
     try {
         // Hash Password
@@ -269,7 +238,7 @@ const studentAttendance = async (req, res) => {
         if (!req.file) {
             console.log("No image received");
         } else {
-            console.log("Image received:", req.file.originalname); // Log image name
+            console.log("Image received:", req.file.originalname);
         }
         const student = await Student.findById(req.params.id);
 
@@ -288,7 +257,6 @@ const studentAttendance = async (req, res) => {
         if (existingAttendance) {
             existingAttendance.status = status;
         } else {
-            // Check if the student has already attended the maximum number of sessions
             const attendedSessions = student.attendance.filter(
                 (a) => a.subName.toString() === subName
             ).length;
@@ -299,9 +267,9 @@ const studentAttendance = async (req, res) => {
             const runPythonVerification = (studentId, imagePath) => {
                 return new Promise((resolve, reject) => {
                     const pythonProcess = spawn('python', [
-                        'mark_attendance.py', // update with the correct path
+                        'mark_attendance.py', 
                         studentId,
-                        req.file.path, // path to the uploaded image
+                        req.file.path, 
                     ]);
 
                     let output = '';
@@ -317,7 +285,7 @@ const studentAttendance = async (req, res) => {
                         if (code !== 0) {
                             return reject(new Error(`Python process exited with code ${code}`));
                         }
-                        resolve(output.trim()); // Expected to be "True" or "False"
+                        resolve(output.trim()); 
                     });
                 });
             };
@@ -326,7 +294,6 @@ const studentAttendance = async (req, res) => {
             console.log("Verification Result:", verificationResult);
 
             if (verificationResult === "True") {
-                // Only push attendance if face matches
                 student.attendance.push({ date, status, subName });
             } else {
                 return res.send({ message: "Face does not match" });
@@ -337,49 +304,6 @@ const studentAttendance = async (req, res) => {
         const result = await student.save();
         return res.send(result);
     } catch (error) {
-        res.status(500).json(error);
-        console.log(error.message)
-    }
-};
-
-const studentAttendanceEmbeddings = async (req, res) => {
-    console.log(req.body)
-    console.log("Inside student controller studentAttendance function")
-    try {
-        const student = await Student.findById(req.params.id);
-        console.log("Inside try")
-        if (!student) {
-            return res.send({ message: 'Student not found' });
-        }
-
-        const subject = await Subject.findById(subName);
-        console.log(subject)
-        const existingAttendance = student.attendance.find(
-            (a) =>
-                a.date.toDateString() === new Date(date).toDateString() &&
-                a.subName.toString() === subName
-        );
-
-        if (existingAttendance) {
-            existingAttendance.status = status;
-            console.log(status)
-        } else {
-            // Check if the student has already attended the maximum number of sessions
-            const attendedSessions = student.attendance.filter(
-                (a) => a.subName.toString() === subName
-            ).length;
-
-            if (attendedSessions >= subject.sessions) {
-                return res.send({ message: 'Maximum attendance limit reached' });
-            }
-
-            student.attendance.push({ date, status, subName });
-        }
-
-        const result = await student.save();
-        return res.send(result);
-    } catch (error) {
-        console.log('Inside catch')
         res.status(500).json(error);
         console.log(error.message)
     }
@@ -457,10 +381,8 @@ module.exports = {
     deleteStudent,
     updateStudent,
     studentAttendance,
-    studentAttendanceEmbeddings,
     deleteStudentsByClass,
     updateExamResult,
-
     clearAllStudentsAttendanceBySubject,
     clearAllStudentsAttendance,
     removeStudentAttendanceBySubject,
